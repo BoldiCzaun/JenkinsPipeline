@@ -24,11 +24,11 @@ to verify if it exists run `docker network ls`
 #### Run the container
 windows command:
 ```
-docker run --name jenkins-blueocean --restart=on-failure --detach `
-  --network jenkins --env DOCKER_HOST=tcp://docker:2376 `
-  --env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY=1 `
-  --volume jenkins-data:/var/jenkins_home `
-  --volume jenkins-docker-certs:/certs/client:ro `
+docker run --name jenkins-blueocean --restart=on-failure --detach \
+  --network jenkins --env DOCKER_HOST=tcp://docker:2376 \
+  --env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY=1 \
+  --volume jenkins-data:/var/jenkins_home \
+  --volume jenkins-docker-certs:/certs/client:ro \
   --publish 8080:8080 --publish 50000:50000 jenkins-blueocean
 ```
 copied exactly from the [jenkins manual](https://www.jenkins.io/doc/book/installing/docker/#downloading-and-running-jenkins-in-docker)
@@ -44,3 +44,12 @@ The next steps are:
 - provide url address (now *localhost:8080* is OK)
 
 ## Setting up jenkins via gui
+*to be done*
+## Jenkins filesystem and workspace
+run `docker exec -it jenkins-blueocean bash` 
+  -> gives us a shell into the container running jenkins
+  -> the same thing will happen upon ssh-ing into the jenkins container
+
+go into the jenkins folder -> specified via the jenkins-data volume (/var/jenkins_home by default)
+  - in the workspace directory the jobs appear as folders with the jobs' name
+    - in the folder of a job the same files appear as under the job/workspace tab on the GUI 
